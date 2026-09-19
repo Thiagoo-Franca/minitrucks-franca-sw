@@ -1,34 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
+import { SignInDto, SignUpDto } from './dto/auth.dto.js';
 import { AuthService } from './auth.service.js';
-import { CreateAuthDto } from './dto/create-auth.dto.js';
-import { UpdateAuthDto } from './dto/update-auth.dto.js';
+import { AuthGuard } from './auth.guard.js';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post('signin')
+  async signIn(@Body() body: SignInDto) {
+    return await this.authService.signIn(body);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('signup')
+  async signUp(@Body() body: SignUpDto) {
+    return await this.authService.signUp(body);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  // apenas teste de rota protegida, para verificar se o token está sendo validado corretamente
+  @UseGuards(AuthGuard) // Apply the AuthGuard to protect this route
+  @Get('me')
+  async getMe(@Request() req: any): Promise<{ userId: number; email: string }> {
+    return req.user; // Assuming the user info is attached to the request object by the AuthGuard
   }
 }
