@@ -209,7 +209,7 @@ export type PostGroupByOutputType = {
   content: string | null
   published: boolean | null
   photosUrl: string[]
-  videosUrl: string
+  videosUrl: string | null
   authorId: number | null
   createdAt: Date
   updatedAt: Date
@@ -244,7 +244,7 @@ export type PostWhereInput = {
   content?: Prisma.StringNullableFilter<"Post"> | string | null
   published?: Prisma.BoolNullableFilter<"Post"> | boolean | null
   photosUrl?: Prisma.StringNullableListFilter<"Post">
-  videosUrl?: Prisma.StringFilter<"Post"> | string
+  videosUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   authorId?: Prisma.IntNullableFilter<"Post"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
@@ -257,7 +257,7 @@ export type PostOrderByWithRelationInput = {
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   published?: Prisma.SortOrderInput | Prisma.SortOrder
   photosUrl?: Prisma.SortOrder
-  videosUrl?: Prisma.SortOrder
+  videosUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   authorId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -273,7 +273,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   content?: Prisma.StringNullableFilter<"Post"> | string | null
   published?: Prisma.BoolNullableFilter<"Post"> | boolean | null
   photosUrl?: Prisma.StringNullableListFilter<"Post">
-  videosUrl?: Prisma.StringFilter<"Post"> | string
+  videosUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   authorId?: Prisma.IntNullableFilter<"Post"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
@@ -286,7 +286,7 @@ export type PostOrderByWithAggregationInput = {
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   published?: Prisma.SortOrderInput | Prisma.SortOrder
   photosUrl?: Prisma.SortOrder
-  videosUrl?: Prisma.SortOrder
+  videosUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   authorId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -306,7 +306,7 @@ export type PostScalarWhereWithAggregatesInput = {
   content?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   published?: Prisma.BoolNullableWithAggregatesFilter<"Post"> | boolean | null
   photosUrl?: Prisma.StringNullableListFilter<"Post">
-  videosUrl?: Prisma.StringWithAggregatesFilter<"Post"> | string
+  videosUrl?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   authorId?: Prisma.IntNullableWithAggregatesFilter<"Post"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
@@ -317,7 +317,7 @@ export type PostCreateInput = {
   content?: string | null
   published?: boolean | null
   photosUrl?: Prisma.PostCreatephotosUrlInput | string[]
-  videosUrl: string
+  videosUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   author?: Prisma.UserCreateNestedOneWithoutPostsInput
@@ -329,7 +329,7 @@ export type PostUncheckedCreateInput = {
   content?: string | null
   published?: boolean | null
   photosUrl?: Prisma.PostCreatephotosUrlInput | string[]
-  videosUrl: string
+  videosUrl?: string | null
   authorId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,7 +340,7 @@ export type PostUpdateInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneWithoutPostsNestedInput
@@ -352,7 +352,7 @@ export type PostUncheckedUpdateInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -364,7 +364,7 @@ export type PostCreateManyInput = {
   content?: string | null
   published?: boolean | null
   photosUrl?: Prisma.PostCreatephotosUrlInput | string[]
-  videosUrl: string
+  videosUrl?: string | null
   authorId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -375,7 +375,7 @@ export type PostUpdateManyMutationInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -386,7 +386,7 @@ export type PostUncheckedUpdateManyInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   authorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -526,7 +526,7 @@ export type PostCreateWithoutAuthorInput = {
   content?: string | null
   published?: boolean | null
   photosUrl?: Prisma.PostCreatephotosUrlInput | string[]
-  videosUrl: string
+  videosUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -537,7 +537,7 @@ export type PostUncheckedCreateWithoutAuthorInput = {
   content?: string | null
   published?: boolean | null
   photosUrl?: Prisma.PostCreatephotosUrlInput | string[]
-  videosUrl: string
+  videosUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -577,7 +577,7 @@ export type PostScalarWhereInput = {
   content?: Prisma.StringNullableFilter<"Post"> | string | null
   published?: Prisma.BoolNullableFilter<"Post"> | boolean | null
   photosUrl?: Prisma.StringNullableListFilter<"Post">
-  videosUrl?: Prisma.StringFilter<"Post"> | string
+  videosUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   authorId?: Prisma.IntNullableFilter<"Post"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
@@ -589,7 +589,7 @@ export type PostCreateManyAuthorInput = {
   content?: string | null
   published?: boolean | null
   photosUrl?: Prisma.PostCreatephotosUrlInput | string[]
-  videosUrl: string
+  videosUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -599,7 +599,7 @@ export type PostUpdateWithoutAuthorInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -610,7 +610,7 @@ export type PostUncheckedUpdateWithoutAuthorInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -621,7 +621,7 @@ export type PostUncheckedUpdateManyWithoutAuthorInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   photosUrl?: Prisma.PostUpdatephotosUrlInput | string[]
-  videosUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  videosUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -701,7 +701,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     content: string | null
     published: boolean | null
     photosUrl: string[]
-    videosUrl: string
+    videosUrl: string | null
     authorId: number | null
     createdAt: Date
     updatedAt: Date

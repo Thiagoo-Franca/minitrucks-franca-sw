@@ -48,11 +48,13 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(data.password, 10);
+
+    // We are using only ADMIN role for now
     await this.prisma.user.create({
       data: {
         email: data.email,
         name: data.name,
-        role: 'USER',
+        role: 'ADMIN',
         password: passwordHash,
         id: undefined, // Let Prisma generate the ID
         posts: undefined, // No posts at sign-up

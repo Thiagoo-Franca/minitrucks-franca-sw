@@ -34,7 +34,7 @@ model Post {
   content   String?
   published Boolean? @default(false)
   photosUrl     String[]
-  videosUrl    String
+  videosUrl    String?
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   createdAt DateTime @default(now())
