@@ -6,15 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts.service.js';
 import { CreatePostDto } from './dto/create-post.dto.js';
 import { UpdatePostDto } from './dto/update-post.dto.js';
+import { AuthGuard } from '../auth/auth.guard.js';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @UseGuards(AuthGuard) // Apply the AuthGuard to protect this route
   @Post()
   async create(@Body() body: CreatePostDto) {
     return this.postsService.create(body);
@@ -26,17 +30,21 @@ export class PostsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.findOne(id);
   }
 
+  @UseGuards(AuthGuard) // Apply the AuthGuard to protect this route
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    return this.postsService.update(id, updatePostDto);
   }
-
+  @UseGuards(AuthGuard) // Apply the AuthGuard to protect this route
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.postsService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.remove(id);
   }
 }
