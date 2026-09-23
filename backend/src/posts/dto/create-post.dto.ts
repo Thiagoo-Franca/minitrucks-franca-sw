@@ -1,16 +1,3 @@
-/*
-id        Int      @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  photosUrl     String[]
-  videosUrl    String
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-*/
-
 import {
   IsArray,
   IsBoolean,
@@ -18,7 +5,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { User } from '../../generated/prisma/client.js';
 
 export class CreatePostDto {
   @IsString()

@@ -16,17 +16,17 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  create(@Body() body: CreatePostDto) {
+  async create(@Body() body: CreatePostDto) {
     return this.postsService.create(body);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.postsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.postsService.findOne(+id);
   }
 
@@ -36,7 +36,7 @@ export class PostsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.postsService.remove(+id);
   }
 }

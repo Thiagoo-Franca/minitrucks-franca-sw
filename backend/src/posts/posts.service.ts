@@ -1,13 +1,18 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto.js';
 import { UpdatePostDto } from './dto/update-post.dto.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { Post, Prisma } from '../generated/prisma/client.js';
 
 @Injectable()
 export class PostsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(body: CreatePostDto) {
+  async create(body: CreatePostDto): Promise<{ message: string }> {
     try {
       await this.prisma.post.create({
         data: body,
@@ -19,7 +24,7 @@ export class PostsService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<Post[]> {
     try {
       const posts = await this.prisma.post.findMany();
 
@@ -29,15 +34,54 @@ export class PostsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number): Promise<Post> {
+    const post = await this.prisma.post.findUnique({
+      where: { id },
+    });
+
+    if (!post) {
+      throw new NotFoundException();
+    }
+
+    return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, body: UpdatePostDto): Promise<{ message: string }> {
+    try {
+      await this.prisma.post.update({
+        where: { id },
+        data: body,
+      });
+
+      return {
+        message: 'Post updated successfully',
+      };
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Post #${id} not found!`);
+      }
+      throw new InternalServerErrorException();
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number): Promise<string> {
+    try {
+      await this.prisma.post.delete({
+        where: { id },
+      });
+
+      return 'Post deleted Successfully ';
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Post #${id} not found!`);
+      }
+      throw new InternalServerErrorException();
+    }
   }
 }
