@@ -1,0 +1,13 @@
+{
+  "name": "minitrucks-franca-sw",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm exec turbo run dev",
+    "build": "pnpm exec turbo run build",
+    "lint": "pnpm exec turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "2.11.2"
+  },
+  "packageManager": "pnpm@12.4.2"
+}
